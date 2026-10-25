@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Ngân hàng câu hỏi | ExamGen</title>
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/style.css" />
+
+        <style>
+            body {
+                background: #f5f7fb;
+            }
+            .page-card {
+                border: 0;
+                border-radius: 14px;
+                box-shadow: 0 3px 18px rgba(30, 50, 90, 0.06);
+            }
+            .question-content {
+                max-width: 340px;
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
+            .table th {
+                font-size: 0.85rem;
+                color: #64748b;
+                white-space: nowrap;
+            }
+            .table td {
+                vertical-align: middle;
+            }
+            .form-label {
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+            .required::after {
+                content: " *";
+                color: #dc3545;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="app-shell">
+        <div id="sidebar-container"></div>
+
+        <main class="main-area">
+            <div id="header-container"></div>
+
+            <div class="page-content container-fluid px-3 px-lg-4 py-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <div class="small text-primary fw-semibold mb-1">
+            EXAMGEN / NGÂN HÀNG
+        </div>
+        <h2 class="fw-bold mb-1">Ngân hàng câu hỏi</h2>
+        <p class="text-muted mb-0">
+            Quản lý câu hỏi theo học phần, chương kiến thức và chuẩn đầu ra.
+        </p>
+    </div>
+
+                <button class="btn btn-primary px-4" id="btnAdd">
+                    + Thêm câu hỏi
+                </button>
+               
+                <button type="button" class="btn btn-outline-success" id="btnImport">
+                   <i class="bi bi-file-earmark-arrow-up me-1"></i>
+                  Import CSV / Excel
+                </button>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4">
+                    <div class="card page-card h-100">
+                        <div class="card-body">
+                            <div class="text-secondary small">
+                                Tổng câu hỏi đang hiển thị
+                            </div>
+                            <div class="fs-2 fw-bold" id="totalQuestions">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card page-card h-100">
+                        <div class="card-body">
+                            <div class="text-secondary small">
+                                Câu hỏi đang hoạt động
+                            </div>
+                            <div
+                                class="fs-2 fw-bold text-success"
+                                id="activeQuestions"
+                            >
+                                0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card page-card h-100">
+                        <div class="card-body">
+                            <div class="text-secondary small">
+                                Câu hỏi chờ duyệt
+                            </div>
+                            <div
+                                class="fs-2 fw-bold text-warning"
+                                id="pendingQuestions"
+                            >
+                                0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="message" class="alert d-none" role="alert"></div>
+
+            <section class="card page-card mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3">Tìm kiếm và lọc câu hỏi</h5>
+
+                    <form id="filterForm">
+                        <div class="row g-3">
+                            <div class="col-12 col-lg-4">
+                                <label class="form-label" for="filterKeyword">
+                                    Từ khóa
+                                </label>
+                                <input
+                                    class="form-control"
+                                    id="filterKeyword"
+                                    placeholder="Nhập mã hoặc nội dung câu hỏi..."
+                                />
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label class="form-label" for="filterCourse"
+                                    >Học phần</label
+                                >
+                                <select class="form-select" id="filterCourse">
+                                    <option value="">Tất cả học phần</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label class="form-label" for="filterType"
+                                    >Dạng câu hỏi</label
+                                >
+                                <select class="form-select" id="filterType">
+                                    <option value="">Tất cả dạng</option>
+                                    <option value="NHIEU_LUA_CHON">
+                                        Nhiều lựa chọn
+                                    </option>
+                                    <option value="DUNG_SAI">Đúng / Sai</option>
+                                    <option value="GHEP_HOP">Ghép hợp</option>
+                                    <option value="DIEN_KHUYET">
+                                        Điền khuyết
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label class="form-label" for="filterDifficulty"
+                                    >Độ khó</label
+                                >
+                                <select
+                                    class="form-select"
+                                    id="filterDifficulty"
+                                >
+                                    <option value="">Tất cả mức độ</option>
+                                    <option value="DE">Dễ</option>
+                                    <option value="TRUNG_BINH">
+                                        Trung bình
+                                    </option>
+                                    <option value="KHO">Khó</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label class="form-label" for="filterStatus"
+                                    >Trạng thái</label
+                                >
+                                <select class="form-select" id="filterStatus">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option value="HOAT_DONG">Hoạt động</option>
+                                    <option value="NGUNG_HOAT_DONG">
+                                        Ngừng hoạt động
+                                    </option>
+                                    <option value="NHAP">Bản nháp</option>
+                                    <option value="CHO_DUYET">Chờ duyệt</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 d-flex gap-2">
+                                <button class="btn btn-primary" type="submit">
+                                    Tìm kiếm
+                                </button>
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="reset"
+                                    id="btnReset"
+                                >
+                                    Xóa bộ lọc
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="card page-card">
+                <div class="card-body">
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-3"
+                    >
+                        <h5 class="fw-bold mb-0">Danh sách câu hỏi</h5>
+                        <span class="text-secondary small" id="resultCount"
+                            >0 kết quả</span
+                        >
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Mã câu hỏi</th>
+                                    <th>Nội dung</th>
+                                    <th>Học phần</th>
+                                    <th>Chương / CĐR</th>
+                                    <th>Dạng</th>
+                                    <th>Độ khó</th>
+                                    <th>Đã dùng</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="questionTable">
+                                <tr>
+                                    <td
+                                        colspan="9"
+                                        class="text-center text-secondary py-5"
+                                    >
+                                        Đang tải dữ liệu...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+              </div>
+            <div id="footer-container"></div>
+        </main>
+
+        <!-- Modal thêm / sửa câu hỏi -->
+        <div
+            class="modal fade"
+            id="questionModal"
+            tabindex="-1"
+            aria-labelledby="questionModalTitle"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content border-0 rounded-4">
+                    <form id="questionForm">
+                        <div class="modal-header">
+                            <div>
+                                <h5
+                                    class="modal-title fw-bold"
+                                    id="questionModalTitle"
+                                >
+                                    Thêm câu hỏi
+                                </h5>
+                                <div class="small text-secondary">
+                                    Nhập nội dung và liên kết với chương, chuẩn
+                                    đầu ra.
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Đóng"
+                            ></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="hidden" id="questionId" />
+
+                            <div class="row g-3">
+                                <div class="col-12 col-md-4">
+                                    <label
+                                        class="form-label required"
+                                        for="questionCode"
+                                    >
+                                        Mã câu hỏi
+                                    </label>
+                                    <input
+                                        class="form-control"
+                                        id="questionCode"
+                                        required
+                                        maxlength="100"
+                                        placeholder="VD: SQL_CAU_001"
+                                    />
+                                </div>
+
+                                <div class="col-12 col-md-8">
+                                    <label
+                                        class="form-label required"
+                                        for="questionCourse"
+                                    >
+                                        Học phần
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        id="questionCourse"
+                                        required
+                                    >
+                                        <option value="">Chọn học phần</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label
+                                        class="form-label required"
+                                        for="questionLink"
+                                    >
+                                        Chương kiến thức / Chuẩn đầu ra
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        id="questionLink"
+                                        required
+                                    >
+                                        <option value="">Chọn liên kết</option>
+                                    </select>
+                                    <div class="form-text">
+                                        Danh sách liên kết thay đổi theo học
+                                        phần đã chọn.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label
+                                        class="form-label required"
+                                        for="questionType"
+                                    >
+                                        Dạng câu hỏi
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        id="questionType"
+                                        required
+                                    >
+                                        <option value="NHIEU_LUA_CHON">
+                                            Nhiều lựa chọn
+                                        </option>
+                                        <option value="DUNG_SAI">
+                                            Đúng / Sai
+                                        </option>
+                                        <option value="GHEP_HOP">
+                                            Ghép hợp
+                                        </option>
+                                        <option value="DIEN_KHUYET">
+                                            Điền khuyết
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label
+                                        class="form-label required"
+                                        for="questionDifficulty"
+                                    >
+                                        Mức độ khó
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        id="questionDifficulty"
+                                        required
+                                    >
+                                        <option value="DE">Dễ</option>
+                                        <option value="TRUNG_BINH">
+                                            Trung bình
+                                        </option>
+                                        <option value="KHO">Khó</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label
+                                        class="form-label required"
+                                        for="questionContent"
+                                    >
+                                        Nội dung câu hỏi
+                                    </label>
+                                    <textarea
+                                        class="form-control"
+                                        id="questionContent"
+                                        rows="4"
+                                        required
+                                        placeholder="Nhập nội dung câu hỏi..."
+                                    ></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <label
+                                        class="form-label"
+                                        for="questionOptions"
+                                    >
+                                        Các lựa chọn (JSON)
+                                    </label>
+                                    <textarea
+                                        class="form-control font-monospace"
+                                        id="questionOptions"
+                                        rows="3"
+                                        placeholder='[{"ma":"A","noi_dung":"Lựa chọn A"},{"ma":"B","noi_dung":"Lựa chọn B"}]'
+                                    ></textarea>
+                                    <div class="form-text">
+                                        Có thể để trống nếu dạng câu hỏi không
+                                        sử dụng lựa chọn.
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label
+                                        class="form-label required"
+                                        for="questionAnswer"
+                                    >
+                                        Đáp án (JSON)
+                                    </label>
+                                    <textarea
+                                        class="form-control font-monospace"
+                                        id="questionAnswer"
+                                        rows="2"
+                                        required
+                                        placeholder='{"dap_an":"A"}'
+                                    ></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <label
+                                        class="form-label"
+                                        for="questionExplanation"
+                                    >
+                                        Giải thích đáp án
+                                    </label>
+                                    <textarea
+                                        class="form-control"
+                                        id="questionExplanation"
+                                        rows="2"
+                                    ></textarea>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label
+                                        class="form-label"
+                                        for="questionStatus"
+                                        >Trạng thái</label
+                                    >
+                                    <select
+                                        class="form-select"
+                                        id="questionStatus"
+                                    >
+                                        <option value="HOAT_DONG">
+                                            Hoạt động
+                                        </option>
+                                        <option value="NHAP">Bản nháp</option>
+                                        <option value="CHO_DUYET">
+                                            Chờ duyệt
+                                        </option>
+                                        <option value="NGUNG_HOAT_DONG">
+                                            Ngừng hoạt động
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal"
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                id="btnSave"
+                            >
+                                Lưu câu hỏi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+<!-- Modal Import câu hỏi -->
+<div
+  class="modal fade"
+  id="importModal"
+  tabindex="-1"
+  aria-labelledby="importModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title fw-bold" id="importModalTitle">
+            <i class="bi bi-file-earmark-spreadsheet text-success me-2"></i>
+            Import ngân hàng câu hỏi
+          </h5>
+          <p class="text-secondary small mb-0 mt-1">
+            Nhập nhiều câu hỏi từ file CSV hoặc Excel
+          </p>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Đóng"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="alert alert-info d-flex gap-2 align-items-start">
+          <i class="bi bi-info-circle-fill mt-1"></i>
+          <div>
+            <strong>Hướng dẫn định dạng file</strong>
+            <div class="small mt-1">
+              File cần có các cột:
+              <code>ma_cau_hoi_code</code>,
+              <code>ma_hoc_phan</code>,
+              <code>ma_lien_ket_chuong_cdr</code>,
+              <code>dang_cau_hoi</code>,
+              <code>muc_do_kho</code>,
+              <code>noi_dung_cau_hoi</code>,
+              <code>cac_lua_chon</code>,
+              <code>dap_an</code>.
+              Có thể thêm cột <code>giai_thich</code> và
+              <code>trang_thai</code>.
+            </div>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary mt-2"
+              id="btnDownloadTemplate"
+            >
+              <i class="bi bi-download me-1"></i>
+              Tải file mẫu CSV
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="border rounded-3 p-4 text-center mb-3"
+          style="border-style: dashed !important; background: #f8fafc;"
+        >
+          <i class="bi bi-cloud-arrow-up fs-1 text-success"></i>
+          <h6 class="fw-semibold mt-2">Chọn file dữ liệu câu hỏi</h6>
+          <p class="text-secondary small mb-3">
+            Hỗ trợ CSV, XLS, XLSX · Tối đa 5 MB · 1000 câu hỏi mỗi lần
+          </p>
+
+          <input
+            type="file"
+            id="importFile"
+            class="form-control"
+            accept=".csv,.xls,.xlsx"
+          />
+
+          <div
+            id="importFileName"
+            class="small text-success mt-2"
+          ></div>
+
+          <button
+            type="button"
+            class="btn btn-success mt-3"
+            id="btnPreviewImport"
+          >
+            <i class="bi bi-search me-1"></i>
+            Kiểm tra và xem trước
+          </button>
+        </div>
+
+        <div id="importMessage" class="alert d-none" role="alert"></div>
+
+        <div id="importSummary" class="d-none mb-3">
+          <div class="row g-3">
+            <div class="col-4">
+              <div class="border rounded-3 p-3 h-100">
+                <div class="small text-secondary">Tổng số dòng</div>
+                <div class="fs-4 fw-bold" id="importTotal">0</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="border rounded-3 p-3 h-100">
+                <div class="small text-secondary">Hợp lệ</div>
+                <div class="fs-4 fw-bold text-success" id="importValid">0</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="border rounded-3 p-3 h-100">
+                <div class="small text-secondary">Dòng có lỗi</div>
+                <div class="fs-4 fw-bold text-danger" id="importInvalid">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="importPreviewSection" class="d-none">
+          <h6 class="fw-bold mb-3">Xem trước dữ liệu</h6>
+
+          <div class="table-responsive border rounded-3">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Dòng</th>
+                  <th>Mã câu hỏi</th>
+                  <th>Học phần</th>
+                  <th>Dạng câu hỏi</th>
+                  <th>Mức độ</th>
+                  <th>Nội dung</th>
+                  <th>Trạng thái kiểm tra</th>
+                </tr>
+              </thead>
+              <tbody id="importPreviewTable">
+                <tr>
+                  <td colspan="7" class="text-center py-4">
+                    Chưa có dữ liệu xem trước
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="small text-secondary mt-2 mb-0">
+            Chỉ nhập dữ liệu khi tất cả các dòng đều hợp lệ.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-light"
+          data-bs-dismiss="modal"
+        >
+          Đóng
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="btnConfirmImport"
+          disabled
+        >
+          <i class="bi bi-database-check me-1"></i>
+          Xác nhận nhập
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/layout.js"></script>
+        <script src="/js/questions.js"></script>
+    </body>
+</html>

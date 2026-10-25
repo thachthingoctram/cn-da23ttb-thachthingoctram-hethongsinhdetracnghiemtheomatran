@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>ExamGen | Tổng quan</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <div class="app-shell">
+            <div id="sidebar-container"></div>
+
+            <main class="main-area" id="overview">
+                <div id="header-container"></div>
+                <div class="page-content">
+                    <div class="welcome-row">
+                        <section class="welcome-banner">
+                            <div class="welcome-copy">
+                                <span class="eyebrow">BẢNG ĐIỀU KHIỂN</span>
+                                <h1>
+                                    Xin chào, Nguyễn Văn A!
+                                    <span class="wave">✦</span>
+                                </h1>
+                                <p>
+                                    Chào mừng bạn quay trở lại hệ thống ExamGen.
+                                </p>
+                                <div class="welcome-tags">
+                                    <span
+                                        ><i class="bi bi-check-circle-fill"></i>
+                                        Không gian làm việc của bạn</span
+                                    ><span
+                                        ><i class="bi bi-stars"></i> Sinh đề
+                                        thông minh</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="banner-illustration">
+                                <div class="orb orb-one"></div>
+                                <div class="orb orb-two"></div>
+                                <div class="book-stack">
+                                    <i class="bi bi-journal-bookmark-fill"></i>
+                                </div>
+                                <i class="bi bi-mortarboard-fill cap-icon"></i
+                                ><span class="sparkle s1">✦</span
+                                ><span class="sparkle s2">✧</span>
+                            </div>
+                        </section>
+                        <section class="date-card">
+                            <div class="date-icon">
+                                <i class="bi bi-calendar3"></i>
+                            </div>
+                            <div>
+                                <span class="date-label">HÔM NAY</span
+                                ><strong id="todayDate"
+                                    >Thứ Hai, 25 tháng 10, 2026</strong
+                                >
+                                <p>Chúc bạn có một ngày làm việc hiệu quả!</p>
+                            </div>
+                            <div class="date-decoration">
+                                <i class="bi bi-sun"></i>
+                            </div>
+                        </section>
+                    </div>
+
+                    <section class="stats-grid">
+                        <article class="stat-card stat-blue">
+                            <div class="stat-top">
+                                <span class="stat-icon"
+                                    ><i
+                                        class="bi bi-journal-bookmark-fill"
+                                    ></i></span
+                                ><span class="stat-trend"
+                                    ><i class="bi bi-graph-up-arrow"></i> Tổng
+                                    số</span
+                                >
+                            </div>
+                            <span class="stat-label">Học phần</span>
+                            <div class="stat-number" id="courseCount">—</div>
+                            <div class="stat-footer">
+                                <span class="stat-sub">Đang hoạt động</span
+                                ><i
+                                    class="bi bi-arrow-up-right-circle-fill stat-arrow"
+                                ></i>
+                            </div>
+                            <div class="stat-shape"></div>
+                        </article>
+                        <article class="stat-card stat-green">
+                            <div class="stat-top">
+                                <span class="stat-icon"
+                                    ><i
+                                        class="bi bi-patch-question-fill"
+                                    ></i></span
+                                ><span class="stat-trend"
+                                    ><i class="bi bi-activity"></i> Ngân
+                                    hàng</span
+                                >
+                            </div>
+                            <span class="stat-label">Câu hỏi</span>
+                            <div class="stat-number" id="questionCount">—</div>
+                            <div class="stat-footer">
+                                <span class="stat-sub">Tổng câu hỏi đã lưu</span
+                                ><i
+                                    class="bi bi-arrow-up-right-circle-fill stat-arrow"
+                                ></i>
+                            </div>
+                            <div class="stat-shape"></div>
+                        </article>
+                        <article class="stat-card stat-amber">
+                            <div class="stat-top">
+                                <span class="stat-icon"
+                                    ><i class="bi bi-columns-gap"></i></span
+                                ><span class="stat-trend"
+                                    ><i class="bi bi-bullseye"></i> Thiết kế
+                                    đề</span
+                                >
+                            </div>
+                            <span class="stat-label">Ma trận đề</span>
+                            <div class="stat-number" id="matrixCount">—</div>
+                            <div class="stat-footer">
+                                <span class="stat-sub">Chưa lưu trữ</span
+                                ><i
+                                    class="bi bi-arrow-up-right-circle-fill stat-arrow"
+                                ></i>
+                            </div>
+                            <div class="stat-shape"></div>
+                        </article>
+                        <article class="stat-card stat-pink">
+                            <div class="stat-top">
+                                <span class="stat-icon"
+                                    ><i
+                                        class="bi bi-file-earmark-check-fill"
+                                    ></i></span
+                                ><span class="stat-trend"
+                                    ><i class="bi bi-lightning-charge-fill"></i>
+                                    Tự động</span
+                                >
+                            </div>
+                            <span class="stat-label">Đề thi</span>
+                            <div class="stat-number" id="examCount">—</div>
+                            <div class="stat-footer">
+                                <span class="stat-sub">Tất cả phiên bản đề</span
+                                ><i
+                                    class="bi bi-arrow-up-right-circle-fill stat-arrow"
+                                ></i>
+                            </div>
+                            <div class="stat-shape"></div>
+                        </article>
+                    </section>
+
+                    <section class="analytics-grid">
+                        <article class="panel difficulty-panel">
+                            <div class="panel-heading">
+                                <div class="heading-icon blue-icon">
+                                    <i class="bi bi-bar-chart-line-fill"></i>
+                                </div>
+                                <div>
+                                    <h2>Phân bố câu hỏi theo mức độ</h2>
+                                    <p>Thống kê theo độ khó câu hỏi</p>
+                                </div>
+                                <select
+                                    class="form-select form-select-sm chart-filter"
+                                    id="difficultyFilter"
+                                >
+                                    <option value="all">Tất cả câu hỏi</option>
+                                </select>
+                            </div>
+                            <div class="chart-wrap">
+                                <canvas
+                                    id="difficultyChart"
+                                    aria-label="Biểu đồ câu hỏi theo mức độ"
+                                ></canvas>
+                            </div>
+                            <div class="chart-legend-inline">
+                                <span
+                                    ><i class="legend-dot dot-blue"></i>Dễ</span
+                                ><span
+                                    ><i class="legend-dot dot-purple"></i>Trung
+                                    bình</span
+                                ><span
+                                    ><i class="legend-dot dot-violet"></i
+                                    >Khó</span
+                                >
+                            </div>
+                        </article>
+                        <article class="panel type-panel">
+                            <div class="panel-heading">
+                                <div class="heading-icon purple-icon">
+                                    <i class="bi bi-pie-chart-fill"></i>
+                                </div>
+                                <div>
+                                    <h2>Phân bố câu hỏi theo dạng</h2>
+                                    <p>Cấu trúc ngân hàng câu hỏi</p>
+                                </div>
+                                <button class="mini-action" title="Thông tin">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </div>
+                            <div class="type-chart-area">
+                                <div class="donut-wrap">
+                                    <canvas id="typeChart"></canvas>
+                                    <div class="donut-center">
+                                        <strong id="donutTotal">—</strong
+                                        ><span>câu hỏi</span>
+                                    </div>
+                                </div>
+                                <div id="typeLegend" class="type-legend">
+                                    <div class="skeleton-line"></div>
+                                    <div class="skeleton-line"></div>
+                                    <div class="skeleton-line"></div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="panel alert-panel">
+                            <div class="panel-heading">
+                                <div class="heading-icon orange-icon">
+                                    <i
+                                        class="bi bi-exclamation-triangle-fill"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h2>Cảnh báo cần chú ý</h2>
+                                    <p>Các vấn đề cần được xử lý</p>
+                                </div>
+                                <span class="alert-count" id="alertCount"
+                                    >0</span
+                                >
+                            </div>
+                            <div id="alertsList" class="alerts-list">
+                                <div class="empty-state">
+                                    <i class="bi bi-shield-check"></i
+                                    ><span>Đang kiểm tra dữ liệu...</span>
+                                </div>
+                            </div>
+                            <a href="#matrices" class="panel-link"
+                                >Xem tất cả cảnh báo
+                                <i class="bi bi-arrow-right"></i
+                            ></a>
+                        </article>
+                    </section>
+
+                    <section class="bottom-grid">
+                        <article class="panel exams-panel" id="exams">
+                            <div class="panel-heading">
+                                <div class="heading-icon blue-icon">
+                                    <i class="bi bi-files"></i>
+                                </div>
+                                <div>
+                                    <h2>Đề thi gần đây</h2>
+                                    <p>
+                                        Theo dõi các phiên bản đề thi mới nhất
+                                    </p>
+                                </div>
+                                <a href="#exams" class="view-all ms-auto"
+                                    >Xem tất cả
+                                    <i class="bi bi-arrow-up-right"></i
+                                ></a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table exam-table align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã đề</th>
+                                            <th>Tên đề thi</th>
+                                            <th>Học phần</th>
+                                            <th>Số câu</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Trạng thái</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentExams">
+                                        <tr>
+                                            <td
+                                                colspan="7"
+                                                class="table-loading"
+                                            >
+                                                Đang tải dữ liệu từ MySQL...
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="table-foot">
+                                <span id="examTableSummary"
+                                    >Hiển thị các đề thi gần đây</span
+                                ><button class="btn-text" id="refreshButton">
+                                    <i class="bi bi-arrow-clockwise"></i> Làm
+                                    mới dữ liệu
+                                </button>
+                            </div>
+                        </article>
+                        <article class="panel activity-panel">
+                            <div class="panel-heading">
+                                <div class="heading-icon green-icon">
+                                    <i class="bi bi-activity"></i>
+                                </div>
+                                <div>
+                                    <h2>Hoạt động gần đây</h2>
+                                    <p>Tổng quan hoạt động hệ thống</p>
+                                </div>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon activity-blue">
+                                        <i class="bi bi-database-check"></i>
+                                    </div>
+                                    <div>
+                                        <strong
+                                            >Kết nối dữ liệu dashboard</strong
+                                        >
+                                        <p>
+                                            Thống kê được lấy trực tiếp từ MySQL
+                                        </p>
+                                    </div>
+                                    <time>Trực tiếp</time>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon activity-purple">
+                                        <i class="bi bi-columns-gap"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Quản lý ma trận đề</strong>
+                                        <p>
+                                            Kiểm tra số câu theo từng ô ma trận
+                                        </p>
+                                    </div>
+                                    <time>Quy trình</time>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon activity-green">
+                                        <i
+                                            class="bi bi-file-earmark-spreadsheet"
+                                        ></i>
+                                    </div>
+                                    <div>
+                                        <strong>Ngân hàng câu hỏi</strong>
+                                        <p>Phân loại theo dạng và mức độ khó</p>
+                                    </div>
+                                    <time>Quy trình</time>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon activity-orange">
+                                        <i class="bi bi-shield-check"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Kiểm tra dữ liệu</strong>
+                                        <p>
+                                            Hiển thị cảnh báo ma trận chưa khớp
+                                        </p>
+                                    </div>
+                                    <time>Tự động</time>
+                                </div>
+                            </div>
+                            <div class="activity-footer">
+                                <span class="live-pulse"></span> Dashboard đang
+                                hoạt động
+                                <span class="ms-auto"
+                                    >API
+                                    <b id="apiStatus">Đang kiểm tra</b></span
+                                >
+                            </div>
+                        </article>
+                    </section>
+                    <div id="footer-container"></div>
+                </div>
+            </main>
+        </div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="appToast" class="toast" role="alert">
+                <div class="toast-header">
+                    <i class="bi bi-info-circle-fill text-primary me-2"></i
+                    ><strong class="me-auto">ExamGen</strong
+                    ><button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                    ></button>
+                </div>
+                <div class="toast-body" id="toastMessage"></div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+        <script src="/js/layout.js"></script>
+        <script src="/js/dashboard.js"></script>
+    </body>
+</html>
